@@ -323,6 +323,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
       // Specific config options
       childrenAttribute: '=ivhTreeviewChildrenAttribute',
       clickHandler: '=ivhTreeviewClickHandler',
+      labelClickHandler: '=ivhTreeviewLabelClickHandler',
       changeHandler: '=ivhTreeviewChangeHandler',
       defaultSelectedState: '=ivhTreeviewDefaultSelectedState',
       expandToDepth: '=ivhTreeviewExpandToDepth',
@@ -608,6 +609,18 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
        */
       trvw.onNodeClick = function(node) {
         (trvw.opts().clickHandler || angular.noop)(node, $scope.root);
+      };
+
+      /**
+       * Call the registered label click handler
+       *
+       * Handler will get a reference to `node` and the root of the tree.
+       *
+       * @param {Object} node Tree node to pass to the handler
+       * @private
+       */
+      trvw.onLabelClick = function(node) {
+        (trvw.opts().labelClickHandler || angular.noop)(node, $scope.root);
       };
 
       /**
