@@ -313,7 +313,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
        * @private
        */
       trvw.onNodeClick = function(node) {
-        ($scope.clickHandler || angular.noop)(node, $scope.root);
+        (trvw.opts().clickHandler || angular.noop)(node, $scope.root);
       };
 
       /**
@@ -327,7 +327,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
        * @private
        */
       trvw.onNodeChange = function(node, isSelected) {
-        ($scope.changeHandler || angular.noop)(node, isSelected, $scope.root);
+        (trvw.opts().changeHandler || angular.noop)(node, isSelected, $scope.root);
       };
     }],
     link: function(scope, element, attrs) {
@@ -350,4 +350,3 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
     ].join('\n')
   };
 }]);
-
