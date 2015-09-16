@@ -108,6 +108,36 @@ angular.module('ivh.treeview').directive('ivhTreeviewChildren', function() {
 
 
 /**
+ * Toggle logic for treeview nodes
+ *
+ * Handles expand/collapse on click. Does nothing for leaf nodes.
+ *
+ * @private
+ * @package ivh.treeview
+ * @copyright 2014 iVantage Health Analytics, Inc.
+ */
+
+angular.module('ivh.treeview').directive('ivhTreeviewLabel', [function() {
+  'use strict';
+  return {
+    restrict: 'A',
+    require: '^ivhTreeview',
+    link: function(scope, element, attrs, trvw) {
+      var node = scope.node;
+
+      element.addClass('ivh-treeview-label');
+
+      element.bind('click', function() {
+        scope.$apply(function() {
+          trvw.onLabelClick(node);
+        });
+      });
+    }
+  };
+}]);
+
+
+/**
  * Treeview tree node directive
  *
  * @private
@@ -577,7 +607,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
        * @private
        */
       trvw.onNodeClick = function(node) {
-        ($scope.clickHandler || angular.noop)(node, $scope.root);
+        (trvw.opts().clickHandler || angular.noop)(node, $scope.root);
       };
 
       /**
@@ -591,7 +621,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
        * @private
        */
       trvw.onNodeChange = function(node, isSelected) {
-        ($scope.changeHandler || angular.noop)(node, isSelected, $scope.root);
+        (trvw.opts().changeHandler || angular.noop)(node, isSelected, $scope.root);
       };
     }],
     link: function(scope, element, attrs) {
@@ -614,7 +644,6 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
     ].join('\n')
   };
 }]);
-
 
 
 angular.module('ivh.treeview').filter('ivhTreeviewAsArray', function() {
